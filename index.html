@@ -3,126 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>凡人热点雷达 · 实时热点 × 二创选题</title>
+<title>凡人热点雷达 · 圈内热点增速 × 二创选题</title>
 <style>
-  :root{
-    --bg:#0b0e14; --panel:#131824; --panel2:#1a2133; --line:#242e45;
-    --text:#e8ecf4; --sub:#8b96ad; --gold:#e6b450; --cyan:#4fd6be; --red:#ff5c5c; --purple:#a78bfa;
-  }
+  :root{--bg:#0b0e14;--panel:#131824;--panel2:#1a2133;--line:#242e45;--text:#e8ecf4;--sub:#8b96ad;
+    --gold:#e6b450;--cyan:#4fd6be;--red:#ff5c5c;--purple:#a78bfa;--green:#6ee7a0}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:radial-gradient(1200px 600px at 70% -10%, #16203a 0%, var(--bg) 55%);color:var(--text);
+  body{background:radial-gradient(1200px 600px at 70% -10%,#16203a 0%,var(--bg) 55%);color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;padding:20px}
   .wrap{max-width:1280px;margin:0 auto}
   header{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:18px}
   h1{font-size:22px;letter-spacing:1px}
   h1 .accent{color:var(--gold)}
   .meta{color:var(--sub);font-size:12px}
-  .btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:7px 14px;border-radius:8px;
-    cursor:pointer;font-size:13px;transition:.15s}
+  .btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px}
   .btn:hover{border-color:var(--gold);color:var(--gold)}
-  .countdown{margin-left:auto;background:linear-gradient(135deg,#2a2038,#1a2133);border:1px solid #3a3355;
-    padding:8px 16px;border-radius:10px;font-size:13px}
+  .countdown{margin-left:auto;background:linear-gradient(135deg,#2a2038,#1a2133);border:1px solid #3a3355;padding:8px 16px;border-radius:10px;font-size:13px}
   .countdown b{color:var(--purple);font-size:15px}
+  h2.sec{font-size:15px;margin:4px 0 10px;color:var(--gold)}
+  .hint{font-size:11px;color:var(--sub);font-weight:400;margin-left:8px}
 
-  .top3{background:linear-gradient(135deg,#1c2438,#141b2c);border:1px solid var(--line);border-radius:14px;
-    padding:16px 18px;margin-bottom:18px}
-  .top3 h2{font-size:15px;margin-bottom:12px;color:var(--gold)}
-  .top3-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-  .opp{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;transition:.15s}
-  .opp:hover{border-color:var(--cyan);transform:translateY(-2px)}
-  .opp .src{font-size:11px;color:var(--sub);margin-bottom:4px}
-  .opp .t{font-size:14px;font-weight:600;margin-bottom:6px}
-  .opp .idea{font-size:12px;color:var(--cyan)}
+  /* 起飞榜 */
+  .rising{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:20px}
+  .rv{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;transition:.15s;position:relative}
+  .rv:hover{border-color:var(--cyan);transform:translateY(-2px)}
+  .rv .vel{position:absolute;top:10px;right:10px;background:#14323a;color:var(--green);font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700}
+  .rv .t{font-size:13.5px;font-weight:600;line-height:1.45;margin-bottom:8px;padding-right:70px}
+  .rv .m{font-size:11px;color:var(--sub)}
+  .rv .m b{color:var(--cyan);font-weight:600}
+  .rv .ents{margin-top:6px}
+  .chip{display:inline-block;font-size:10.5px;background:#3a2f14;color:var(--gold);padding:1px 7px;border-radius:5px;margin:2px 4px 0 0}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:20px}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
   .panel .head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--panel2)}
-  .panel .head .dot{width:8px;height:8px;border-radius:50%}
   .panel .head h3{font-size:14px}
   .panel .head .status{margin-left:auto;font-size:11px;color:var(--sub)}
-  .panel .tabs{display:flex;gap:0;border-bottom:1px solid var(--line)}
-  .panel .tabs button{flex:1;background:none;border:none;color:var(--sub);padding:8px;font-size:12px;cursor:pointer}
-  .panel .tabs button.on{color:var(--gold);border-bottom:2px solid var(--gold)}
-  ul.list{list-style:none;overflow-y:auto;max-height:480px;flex:1}
-  ul.list li{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid #1b2234;cursor:pointer;transition:.1s;align-items:baseline}
+  ul.list{list-style:none;overflow-y:auto;max-height:440px;flex:1}
+  ul.list li{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid #1b2234;cursor:pointer;align-items:baseline}
   ul.list li:hover{background:#1b2338}
-  li .rk{font-size:12px;color:var(--sub);min-width:20px;text-align:right;font-variant-numeric:tabular-nums}
+  li .rk{font-size:12px;color:var(--sub);min-width:20px;text-align:right}
   li:nth-child(-n+3) .rk{color:var(--red);font-weight:700}
   li .tt{font-size:13px;line-height:1.45;flex:1}
   li .hot{font-size:11px;color:var(--sub);white-space:nowrap}
-  li.fanren{background:linear-gradient(90deg,rgba(230,180,80,.10),transparent)}
-  li.fanren .tt{color:var(--gold)}
-  .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:1px}
-  .tag.direct{background:#3a2f14;color:var(--gold)}
-  .tag.hotmeme{background:#14323a;color:var(--cyan)}
-  .empty{padding:24px;text-align:center;color:var(--sub);font-size:13px}
+  .bar{height:4px;background:#1b2234;border-radius:2px;margin-top:5px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:2px}
+  .kwmeta{font-size:11px;color:var(--sub);margin-top:2px}
+  .kwmeta .up{color:var(--green);font-weight:700}
+  .sugs{padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px;overflow-y:auto;max-height:440px;align-content:flex-start}
+  .sug-chip{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:5px 12px;font-size:12.5px;cursor:pointer}
+  .sug-chip:hover{border-color:var(--gold);color:var(--gold)}
+  .empty{padding:24px;text-align:center;color:var(--sub);font-size:13px;line-height:1.7}
 
-  /* 建议抽屉 */
+  /* 抽屉 */
   .drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;z-index:50}
-  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,94vw);background:var(--panel);border-left:1px solid var(--line);
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(540px,94vw);background:var(--panel);border-left:1px solid var(--line);
     z-index:60;transform:translateX(105%);transition:.25s;display:flex;flex-direction:column}
   .drawer.open{transform:none}
   .drawer .dh{padding:16px 18px;border-bottom:1px solid var(--line);background:var(--panel2)}
   .drawer .dh .cat{font-size:11px;color:var(--purple);margin-bottom:4px}
-  .drawer .dh h3{font-size:16px;line-height:1.4}
+  .drawer .dh h3{font-size:15.5px;line-height:1.4}
   .drawer .body{padding:16px 18px;overflow-y:auto;flex:1}
-  .sug{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
-  .sug .st{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-  .sug .st .form{font-size:10px;background:#2a2038;color:var(--purple);padding:2px 8px;border-radius:5px}
-  .sug .st b{font-size:14px;color:var(--gold)}
-  .sug p{font-size:12.5px;color:#c3cbdd;line-height:1.6;margin-bottom:8px}
-  .sug .pl{font-size:11px;color:var(--sub);margin-bottom:4px}
-  .sug pre{background:#0d1119;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12px;
-    color:var(--cyan);white-space:pre-wrap;line-height:1.55;font-family:inherit}
-  .sug .row{display:flex;gap:8px;margin-top:8px}
+  .sg{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+  .sg .st{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .sg .form{font-size:10px;background:#2a2038;color:var(--purple);padding:2px 8px;border-radius:5px}
+  .sg .st b{font-size:14px;color:var(--gold)}
+  .sg p{font-size:12.5px;color:#c3cbdd;line-height:1.65;margin-bottom:8px}
+  .sg .pl{font-size:11px;color:var(--sub);margin-bottom:4px}
+  .sg pre{background:#0d1119;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12px;color:var(--cyan);white-space:pre-wrap;line-height:1.55;font-family:inherit}
+  .sg .row{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap}
   .copy{background:#14323a;color:var(--cyan);border:none;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer}
-  .copy:hover{filter:brightness(1.2)}
+  .tip{font-size:11px;color:var(--sub)}
   .close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--sub);font-size:20px;cursor:pointer}
-  .tip{font-size:11px;color:var(--sub);margin-top:2px;line-height:1.6}
-  footer{margin-top:20px;color:#5a6478;font-size:11px;text-align:center;line-height:1.8}
-  a{color:inherit;text-decoration:none}
+  footer{margin-top:8px;color:#5a6478;font-size:11px;text-align:center;line-height:1.8}
+  a{color:var(--cyan);text-decoration:none;font-size:11px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>凡人<span class="accent">热点雷达</span> ⚡</h1>
+    <h1>凡人<span class="accent">热点雷达</span> ⚡ <span class="hint">v2 · 只看凡人圈，不蹭大盘</span></h1>
     <span class="meta" id="updated">加载中…</span>
     <button class="btn" onclick="load(true)">↻ 刷新</button>
     <div class="countdown" id="countdown"></div>
   </header>
 
-  <section class="top3">
-    <h2>🎯 今日二创机会 Top 3（点击查看方案）</h2>
-    <div class="top3-grid" id="top3"><div class="empty">分析中…</div></div>
-  </section>
+  <h2 class="sec">🚀 正在起飞的二创 <span class="hint">近3天投稿 · 按每小时播放增速排序 · 点击看复刻方案</span></h2>
+  <div class="rising" id="rising"><div class="empty">加载中…</div></div>
 
-  <div class="grid">
+  <div class="cols">
     <div class="panel">
-      <div class="head"><span class="dot" style="background:#ff5c5c"></span><h3>抖音热榜</h3><span class="status" id="s-douyin"></span></div>
-      <ul class="list" id="l-douyin"><div class="empty">加载中…</div></ul>
+      <div class="head"><h3>🔥 凡人热词榜</h3><span class="status hint">按关联视频增速加权</span></div>
+      <ul class="list" id="l-kw"><div class="empty">加载中…</div></ul>
     </div>
     <div class="panel">
-      <div class="head"><span class="dot" style="background:#ffb14f"></span><h3>微博热搜 <span style="font-size:10px;color:var(--sub)">(发酵最快·提前量)</span></h3><span class="status" id="s-weibo"></span></div>
-      <ul class="list" id="l-weibo"><div class="empty">加载中…</div></ul>
+      <div class="head"><h3>💭 搜索联想热词</h3><span class="status hint">B站+百度实时联想 · 观众正在搜什么</span></div>
+      <div class="sugs" id="l-sug"><div class="empty">加载中…</div></div>
     </div>
     <div class="panel">
-      <div class="head"><span class="dot" style="background:#4fd6be"></span><h3>B站热门</h3><span class="status" id="s-bili"></span></div>
-      <ul class="list" id="l-bili"><div class="empty">加载中…</div></ul>
+      <div class="head"><h3>📺 最新投稿流</h3><span class="status" id="s-new"></span></div>
+      <ul class="list" id="l-new"><div class="empty">加载中…</div></ul>
     </div>
     <div class="panel">
-      <div class="head"><span class="dot" style="background:#a78bfa"></span><h3>凡人二创监测 <span style="font-size:10px;color:var(--sub)">(B站→抖音提前量)</span></h3><span class="status" id="s-fanren"></span></div>
-      <div class="tabs">
-        <button class="on" id="tab-new" onclick="fanrenTab('new')">最新投稿</button>
-        <button id="tab-hot" onclick="fanrenTab('hot')">最高播放</button>
-      </div>
-      <ul class="list" id="l-fanren"><div class="empty">加载中…</div></ul>
+      <div class="head"><h3>🌊 大盘热榜 · 凡人相关</h3><span class="status hint">抖音+微博+B站已过滤</span></div>
+      <ul class="list" id="l-main"><div class="empty">加载中…</div></ul>
     </div>
   </div>
 
   <footer>
-    数据每 5 分钟缓存刷新 · 点击任意热点生成凡人二创方案 · 金色高亮 = 凡人直接相关<br>
-    工具链：即梦 Seedream（图）→ Seedance/可灵（视频）→ Wan2.2（人物替换）→ 剪映（成片）
+    数据每5分钟缓存刷新 · 增速 = 播放量 ÷ 发布小时数（起飞中的视频是最强信号：24h内复刻或差异化跟进）<br>
+    工具链：即梦 Seedream（图）→ Seedance/可灵（视频）→ Wan2.2（换角）→ 剪映（成片）
   </footer>
 </div>
 
@@ -134,184 +123,153 @@
 </div>
 
 <script>
-let DATA = null, fanrenMode = 'new';
-
-/* ---------------- 分类与二创建议引擎 ---------------- */
-const DIRECT = /凡人修仙|韩立|韩老魔|南宫婉|紫灵|凌玉灵|厉飞雨|墨大夫|瀚海迷踪|忘语|修仙|仙侠|国漫/;
-const CATS = [
-  {id:'film',  name:'影视/综艺/明星', re:/电影|电视剧|开播|定档|预告|杀青|首映|票房|综艺|演唱会|新歌|官宣|角色|导演|主演|片段|名场面/},
-  {id:'meme',  name:'热梗/搞笑',      re:/梗|笑|离谱|沙雕|魔性|整活|评论区|挑战|爆火|太好笑|绷不住|哈哈|抽象|显眼包/},
-  {id:'work',  name:'打工人/生活',    re:/打工|上班|加班|裁员|工资|职场|辞职|调休|放假|高考|考研|开学|毕业|房价|相亲|外卖/},
-  {id:'emo',   name:'情感/CP',       re:/恋爱|分手|结婚|表白|情侣|CP|离婚|前任|暧昧|告白/},
-  {id:'sport', name:'体育/竞技',      re:/比赛|夺冠|决赛|世界杯|奥运|球队|球员|电竞|赛季|绝杀/},
-  {id:'tech',  name:'科技/游戏',      re:/AI|人工智能|手机|芯片|发布会|游戏|上线|开服|新版本/},
+let DATA=null;
+const IMG='《凡人修仙传》动画风格，3D国漫渲染，无肢体变形，细节清晰，';
+const ENTS=[
+ {w:'韩老魔',re:/韩老魔|老魔/,type:'meme',note:'黑化狠辣人设'},
+ {w:'韩跑跑',re:/韩跑跑|跑路|先跑/,type:'meme',note:'见势不妙先跑'},
+ {w:'火龙童子',re:/火龙/,type:'meme',note:'二创顶流悲催儿子'},
+ {w:'南宫婉',re:/南宫婉|婉姐/,type:'cp',note:'正宫CP线'},
+ {w:'紫灵',re:/紫灵/,type:'cp',note:'意难平CP线'},
+ {w:'凌玉灵',re:/凌玉灵/,type:'cp',note:'修罗场爆款角色'},
+ {w:'陈巧倩',re:/陈巧倩/,type:'cp',note:''},{w:'董萱儿',re:/董萱儿/,type:'cp',note:''},{w:'元瑶',re:/元瑶/,type:'cp',note:''},
+ {w:'韩立',re:/韩立/,type:'role',note:'主角'},
+ {w:'厉飞雨',re:/厉飞雨/,type:'role',note:'有事厉飞雨梗'},
+ {w:'银月',re:/银月/,type:'role',note:''},{w:'墨大夫',re:/墨大夫/,type:'role',note:''},{w:'王蝉',re:/王蝉/,type:'role',note:''},{w:'六道',re:/六道/,type:'role',note:''},
+ {w:'结婴/元婴',re:/结婴|元婴/,type:'plot',note:'名场面'},
+ {w:'大战/斗法',re:/大战|斗法|激战|对决/,type:'plot',note:''},
+ {w:'电影瀚海迷踪',re:/瀚海|电影/,type:'event',note:'12月上映持续升温'},
+ {w:'新集更新',re:/更新|最新一集|抢先|预告/,type:'event',note:'周六固定热点'},
+ {w:'打工人',re:/打工|上班|职场|996/,type:'meme',note:'都市隶人梗'},
+ {w:'修罗场',re:/修罗场|表白|吃醋/,type:'cp',note:'播放天花板题材'},
 ];
-function classify(t){
-  if(DIRECT.test(t)) return {id:'direct', name:'凡人直接相关'};
-  for(const c of CATS) if(c.re.test(t)) return c;
-  return {id:'news', name:'社会热点'};
-}
 
-const IMG_BASE = '《凡人修仙传》动画风格，3D国漫渲染，韩立身着青衫，面部表情冷静，无肢体变形，细节清晰，';
-const VID_BASE = '国漫3D渲染风格，仙侠氛围，灵气光效，镜头运镜流畅，8秒，';
-
-function suggestions(topic, cat){
-  const t = topic;
-  const S = [];
-  if(cat.id==='direct'){
-    S.push({form:'追热点·首发', title:`「${t}」× 凡人视角速评/名场面重制`,
-      idea:'凡人自带热点，2小时内首发吃最大流量：AI重制相关名场面，或做角色反应短剧（韩立/韩老魔对此事的反应）。',
-      prompt:IMG_BASE+`与「${t}」相关的名场面重现，电影级质感，修仙场景，氛围光`,
-      pub:'立即发布，标题用疑问句蹭话题词'});
-    S.push({form:'玩梗图文', title:`道友们怎么看「${t}」`,
-      idea:'Q版韩立+话题梗图，评论区引导"道友请留步"互动。',
-      prompt:`韩立Q版形象，做出吃惊/看热闹表情，配文与「${t}」相关的吐槽，水墨风格表情包`,
-      pub:'图文形式，带话题原词'});
-  }
-  if(cat.id==='film'){
-    S.push({form:'AI缝合·换角', title:`如果《${t.slice(0,12)}》的主角是韩立`,
-      idea:'验证过的最强套路（同类作品4天390万播放）：取该影视热门片段，用阿里Wan2.2把主角替换成韩立/凡人角色，人设反差=爆点。',
-      prompt:'Wan2.2人物替换：还原《凡人修仙传》动画建模，韩立身着青衫，动作流畅自然，面部表情冷静，无肢体变形，贴合原片段光影',
-      pub:'热点当天发，标题"韩立乱入"式疑问句'});
-    S.push({form:'短剧新编', title:`韩立看「${t}」的反应`,
-      idea:'反应视频：分镜1韩立刷手机→分镜2瞳孔地震→分镜3淡定"不过尔尔"。3张图+首尾帧即可成片。',
-      prompt:IMG_BASE+'手持玉简（手机），先惊讶后淡定的表情变化，茶馆背景',pub:'15秒内，前3秒必须出热点词'});
-  }
-  if(cat.id==='meme'){
-    S.push({form:'热梗嫁接', title:`韩老魔也「${t.slice(0,14)}」`,
-      idea:'把热梗装进凡人人设：韩跑跑（怂）、韩老魔（狠）、打工人韩立（惨）三选一，谁的反差大用谁。',
-      prompt:`韩立Q版形象，正在演绎「${t}」热梗动作，夸张搞笑，配梗字幕，水墨风格表情包元素`,
-      pub:'梗的半衰期<24h，当天必须发'});
-    S.push({form:'8秒AI短视频', title:`修仙界版「${t.slice(0,14)}」`,
-      idea:'即梦/可灵图生视频：把梗的场景搬到修仙世界（坊市/洞府/宗门大殿）重演一遍。',
-      prompt:VID_BASE+`修仙坊市场景中重演「${t}」的名场面，角色为青衫修士，喜剧节奏`,
-      pub:'竖版9:16，BGM用梗的原声'});
-  }
-  if(cat.id==='work'){
-    S.push({form:'打工人共鸣', title:`当代打工人 vs 都市隶人韩立：${t.slice(0,12)}`,
-      idea:'韩立"996修仙打工人"人设（身兼花匠杀手医生数职）天然适配职场话题，共鸣类内容转发率最高。',
-      prompt:IMG_BASE+`疲惫地同时干多份活（炼丹+种药+打杂），对照现代职场「${t}」场景，分屏构图，幽默风`,
-      pub:'早高峰8点或晚9点发，扎心文案'});
-  }
-  if(cat.id==='emo'){
-    S.push({form:'CP向短剧', title:`韩立×南宫婉版「${t.slice(0,12)}」`,
-      idea:'情感热点套到韩立CP线（南宫婉/紫灵/凌玉灵修罗场），修罗场类是凡人二创播放天花板。',
-      prompt:IMG_BASE+`与南宫婉的情感对手戏，演绎「${t}」情节，唯美仙侠场景，电影感构图`,
-      pub:'晚8-10点情感时段发'});
-  }
-  if(cat.id==='sport'){
-    S.push({form:'热血混剪', title:`修仙界也有「${t.slice(0,12)}」`,
-      idea:'竞技热点→斗法名场面混剪：韩立结婴/大战片段配赛事解说腔配音（讯飞"激昂解说"音色）。',
-      prompt:VID_BASE+'韩立与对手激烈斗法，法术对轰，爆发高光时刻，热血运镜',pub:'赛后2小时内发'});
-  }
-  if(cat.id==='tech'){
-    S.push({form:'脑洞嫁接', title:`如果修仙界有「${t.slice(0,12)}」`,
-      idea:'科技热点→修仙设定翻译：AI=傀儡术，手机=传讯玉简，发布会=拍卖会。设定类脑洞视频完播率高。',
-      prompt:IMG_BASE+`使用修仙版的「${t}」（法宝化的科技产品），坊市拍卖会场景，众修士围观`,
-      pub:'科技圈话题发酵第2天发，玩"翻译"梗'});
-  }
-  if(cat.id==='news'||S.length===0){
-    S.push({form:'万能反应体', title:`韩立听说「${t.slice(0,14)}」之后…`,
-      idea:'通用模板：任何热点都可做"韩立反应"三格短剧（听闻→震惊→淡然飞升离场）。',
-      prompt:IMG_BASE+`听到「${t}」消息后的三段表情：疑惑、震惊、淡然离去，三格漫画构图`,
-      pub:'保底选题，热点榜前5的话题才值得做'});
-  }
-  S.push({form:'发布清单', title:'执行提醒', idea:'✅ 简介加"AI创作"声明　✅ 带 #凡人修仙传二创 #韩立 + 热点原话题词　✅ 前3秒出热点词　✅ 发布后1小时内回评论', prompt:'', pub:''});
+function sugByType(word,type,extra){
+  const S=[];
+  if(type==='cp') S.push(
+    {form:'修罗场短剧',title:`「${word}」修罗场：当众名场面`,idea:'凡人二创播放天花板题材（同类4天390万播放）。写5句反差对话（表白/吃醋/误会），即梦出4-6张分镜图，Seedance首尾帧成片。'+(extra||''),prompt:IMG+`${word}与韩立的情感对手戏，当众修罗场名场面，人物表情戏剧化（羞恼/吃醋/淡定），唯美仙侠场景，电影感构图`,pub:'晚8-10点情感时段发，标题埋悬念'},
+    {form:'角色美图',title:`${word} AI美图/壁纸系列`,idea:'角色向图集稳定涨粉+高收藏，"高清可保存"引导互动，可做每周固定栏目。',prompt:IMG+`${word}精美立绘，唯美光影，仙气飘飘，高清壁纸构图，多角度多服饰系列`,pub:'图文形式，标题带"可保存"'});
+  if(type==='meme') S.push(
+    {form:'人设玩梗短剧',title:`${word}名场面合集/新编`,idea:`围绕「${word}」人设做反差短剧或三格漫画，梗越老粉丝越爱，系列化做成栏目（第N集）粘性最高。`+(extra||''),prompt:IMG+`演绎「${word}」经典梗，夸张表情，喜剧节奏，Q版与写实混搭，配梗字幕`,pub:'系列化发布，固定标题格式'},
+    {form:'8秒梗视频',title:`当${word}遇到新剧情`,idea:'结合最新一集剧情让老梗翻新：新场景+老人设=低成本稳定款。',prompt:'国漫3D渲染，仙侠场景，'+`「${word}」人设在最新剧情场景中的搞笑反应，8秒，喜剧节奏`,pub:'追更日当天发'});
+  if(type==='role') S.push(
+    {form:'角色深挖',title:`${word}人设解读/高光混剪`,idea:'角色解读类中长内容在抖音精选累计播放超5.7亿，配AI重制画面提升质感。'+(extra||''),prompt:IMG+`${word}的高光时刻重现，电影级质感，氛围光效，情绪张力构图`,pub:'解读配音用讯飞沉稳男声'},
+    {form:'反差短剧',title:`${word}的另一面`,idea:'挖人设反差点做小剧场（狠人的怂时刻/配角的主角梦）。',prompt:IMG+`${word}人设反差场景，前后对比构图，幽默风`,pub:'15-30秒竖版'});
+  if(type==='plot') S.push(
+    {form:'名场面AI重制',title:`${word}名场面电影级重制`,idea:'AI提画质/重新演绎经典桥段，"如果凡人是电影质感"类对比视频完播率高。',prompt:IMG+`${word}名场面，电影级渲染，光影氛围拉满，动态构图，震撼视觉`,pub:'配原声BGM《诀爱》等'},
+    {form:'剧情推演',title:`${word}之后会发生什么`,idea:'原著党+动画党都爱看的预测/对比内容，评论区互动率高。',prompt:IMG+`基于「${word}」的后续剧情想象画面，悬念感构图`,pub:'追更日前一天发预热'});
+  if(type==='event') S.push(
+    {form:'物料二创',title:`${word}前瞻/二创预演`,idea:'官方物料（预告/定档/海报）发布当天是确定性流量窗口，AI预演正片名场面抢首发。'+(extra||''),prompt:IMG+`围绕「${word}」的关键画面AI预演，海报级构图，史诗感`,pub:'物料发布2小时内跟进'});
+  S.push({form:'发布清单',title:'执行提醒',idea:'✅ 简介加"AI创作"声明　✅ #凡人修仙传二创 #韩立 + 该热词标签　✅ 前3秒出关键词　✅ 发布1小时内回评论',prompt:'',pub:''});
   return S;
 }
 
-/* ---------------- 渲染 ---------------- */
-function fmtHot(n){ if(!n) return ''; return n>1e8?(n/1e8).toFixed(1)+'亿':n>1e4?(n/1e4).toFixed(0)+'万':n; }
-function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-function renderList(elId, src, opts={}){
-  const el = document.getElementById(elId);
-  if(!src.ok || !src.list.length){ el.innerHTML = '<div class="empty">暂时取不到该榜单（源被限流），稍后刷新重试</div>'; return; }
-  el.innerHTML = src.list.map(x=>{
-    const isF = DIRECT.test(x.title);
-    const cat = classify(x.title);
-    const tag = isF ? '<span class="tag direct">凡人</span>' : (cat.id==='meme'?'<span class="tag hotmeme">易嫁接</span>':'');
-    const sub = opts.time && x.time ? new Date(x.time).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) : fmtHot(x.hot);
-    return `<li class="${isF?'fanren':''}" onclick='openDrawer(${JSON.stringify(x.title)})'>
-      <span class="rk">${x.rank}</span>
-      <span class="tt">${esc(x.title)}${tag}${x.author?`<br><span style="font-size:11px;color:var(--sub)">@${esc(x.author)}</span>`:''}</span>
-      <span class="hot">${sub}</span></li>`;
-  }).join('');
+function videoSug(v){
+  const hrs=Math.max((Date.now()/1000-v.pubdate)/3600,2).toFixed(0);
+  const matched=ENTS.filter(e=>e.re.test(v.title+(v.tags||'')));
+  const ent=matched[0];
+  const S=[
+    {form:'快速复刻',title:'24小时内出自己的版本',idea:`这条${hrs}小时冲了${fmt(v.play)}播放，题材已验证。拆它的结构（开头钩子/冲突点/结尾），换你的画面风格和节奏复刻一版发抖音——B站起飞的内容搬抖音通常还有1-2天红利期。`,prompt:IMG+`参考选题「${v.title.slice(0,20)}」，用自己的分镜重新演绎，差异化画风`,pub:'越快越好，红利期内发'},
+    {form:'差异化跟进',title:'同题材反转版',idea:'不硬抄：换主视角角色、反转结局、或做"回应版"（如它是虐向你做甜向）。评论区蹭它的热评当你的选题灵感。',prompt:IMG+(ent?`以「${ent.w}」为主视角重构该题材，`:'')+'反转剧情设计，前后对比构图',pub:'晚它半天发，标题呼应它'},
+  ];
+  if(ent) S.push(...sugByType(ent.w,ent.type,ent.note?`（${ent.note}）`:''));
+  return S;
 }
 
-function renderTop3(){
-  const pool = [];
-  const push=(src,name,w)=>{ if(src.ok) src.list.forEach(x=>{
-    const c=classify(x.title); let score=(31-x.rank)*w;
-    if(c.id==='direct')score+=100; else if(c.id==='meme')score+=40; else if(c.id==='film')score+=30; else if(c.id==='work'||c.id==='emo')score+=20;
-    pool.push({...x,src:name,cat:c,score});});};
-  push(DATA.douyin,'抖音热榜',2); push(DATA.weibo,'微博热搜',1.5); push(DATA.bili,'B站热门',1);
-  const top = pool.sort((a,b)=>b.score-a.score).slice(0,3);
-  document.getElementById('top3').innerHTML = top.length? top.map(x=>{
-    const s = suggestions(x.title,x.cat)[0];
-    return `<div class="opp" onclick='openDrawer(${JSON.stringify(x.title)})'>
-      <div class="src">${x.src} #${x.rank} · ${x.cat.name}</div>
-      <div class="t">${esc(x.title)}</div>
-      <div class="idea">💡 ${esc(s.title)}</div></div>`;
-  }).join('') : '<div class="empty">暂无数据</div>';
+function fmt(n){if(!n)return '0';return n>1e8?(n/1e8).toFixed(1)+'亿':n>1e4?(n/1e4).toFixed(1)+'万':n}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function vel(v){const h=Math.max((Date.now()/1000-v.pubdate)/3600,2);return v.play/h}
+function ago(ts){const h=(Date.now()/1000-ts)/3600;return h<1?Math.round(h*60)+'分钟前':h<24?Math.round(h)+'小时前':Math.round(h/24)+'天前'}
+
+function render(){
+  const now=Date.now()/1000;
+  const recent=DATA.videosNew.filter(v=>v.pubdate>now-72*3600);
+  // 起飞榜
+  const rising=[...recent].sort((a,b)=>vel(b)-vel(a)).slice(0,8);
+  document.getElementById('rising').innerHTML = rising.length? rising.map((v,i)=>{
+    const ents=ENTS.filter(e=>e.re.test(v.title+(v.tags||''))).slice(0,3);
+    return `<div class="rv" onclick='openVideo(${i})' data-i="${i}">
+      <span class="vel">▲ ${fmt(Math.round(vel(v)))}/时</span>
+      <div class="t">${esc(v.title)}</div>
+      <div class="m">@${esc(v.author)} · ${ago(v.pubdate)} · 播放 <b>${fmt(v.play)}</b> · 弹幕 ${fmt(v.danmaku)} · <a href="${v.url}" target="_blank" onclick="event.stopPropagation()">去看↗</a></div>
+      <div class="ents">${ents.map(e=>`<span class="chip">${e.w}</span>`).join('')}</div></div>`;
+  }).join('') : '<div class="empty">近3天暂无投稿数据，稍后刷新</div>';
+  window._rising=rising;
+
+  // 热词榜：按关联视频增速加权
+  const kws=ENTS.map(e=>{
+    const vids=recent.filter(v=>e.re.test(v.title+(v.tags||'')));
+    return {...e,score:vids.reduce((s,v)=>s+vel(v),0),n:vids.length};
+  }).filter(k=>k.n>0).sort((a,b)=>b.score-a.score);
+  const mx=kws.length?kws[0].score:1;
+  document.getElementById('l-kw').innerHTML = kws.length? kws.map((k,i)=>`
+    <li onclick='openKw(${JSON.stringify(k.w)},${JSON.stringify(k.type)},${JSON.stringify(k.note||"")})'>
+      <span class="rk">${i+1}</span>
+      <span class="tt">${k.w}<div class="bar"><i style="width:${Math.max(k.score/mx*100,4)}%"></i></div>
+      <div class="kwmeta"><span class="up">▲${fmt(Math.round(k.score))}/时</span> · ${k.n}条近3天视频${k.note?' · '+k.note:''}</div></span></li>`).join('')
+    : '<div class="empty">暂无数据</div>';
+
+  // 联想热词
+  document.getElementById('l-sug').innerHTML = DATA.suggests.length? DATA.suggests.map(s=>
+    `<span class="sug-chip" onclick='openKw(${JSON.stringify(s)},"auto","")'>${esc(s)}</span>`).join('')
+    : '<div class="empty">暂无联想词</div>';
+
+  // 最新投稿
+  document.getElementById('l-new').innerHTML = DATA.videosNew.slice(0,40).map((v,i)=>`
+    <li onclick='openVideoRaw(${i})'>
+      <span class="rk">${i+1}</span>
+      <span class="tt">${esc(v.title)}<br><span style="font-size:11px;color:var(--sub)">@${esc(v.author)} · ${ago(v.pubdate)}</span></span>
+      <span class="hot">${fmt(v.play)}</span></li>`).join('');
+  document.getElementById('s-new').textContent='✓ 实时';
+
+  // 大盘过滤
+  document.getElementById('l-main').innerHTML = DATA.mainstream.length? DATA.mainstream.map((x,i)=>`
+    <li onclick='openKw(${JSON.stringify(x.title)},"auto","")'>
+      <span class="rk">${i+1}</span><span class="tt">${esc(x.title)}<br><span style="font-size:11px;color:var(--sub)">${x.src} #${x.rank}</span></span>
+      <span class="hot">${fmt(x.hot)}</span></li>`).join('')
+    : '<div class="empty">今日大盘热榜没有凡人相关话题<br>👍 不用硬蹭，专注圈内选题就好</div>';
 }
 
-function openDrawer(title){
-  const cat = classify(title);
-  document.getElementById('d-cat').textContent = '识别分类：'+cat.name;
-  document.getElementById('d-title').textContent = title;
-  document.getElementById('d-body').innerHTML = suggestions(title,cat).map((s,i)=>`
-    <div class="sug">
-      <div class="st"><span class="form">${s.form}</span><b>${esc(s.title)}</b></div>
-      <p>${s.idea}</p>
-      ${s.prompt?`<div class="pl">提示词（即梦/可灵/Wan2.2 直接用）：</div><pre id="p${i}">${esc(s.prompt)}</pre>
-      <div class="row"><button class="copy" onclick="copyP('p${i}',this)">复制提示词</button>
-      ${s.pub?`<span class="tip">⏰ ${s.pub}</span>`:''}</div>`:''}
+function openVideo(i){const v=window._rising[i];showDrawer('起飞中 · ▲'+fmt(Math.round(vel(v)))+'/时',v.title,videoSug(v))}
+function openVideoRaw(i){const v=DATA.videosNew[i];showDrawer('最新投稿 · '+ago(v.pubdate),v.title,videoSug(v))}
+function openKw(word,type,note){
+  if(type==='auto'){const e=ENTS.find(e=>e.re.test(word));type=e?e.type:'role';note=e?e.note:''}
+  showDrawer('热词选题',word,sugByType(word,type,note?`（${note}）`:''));
+}
+function showDrawer(cat,title,sugs){
+  document.getElementById('d-cat').textContent=cat;
+  document.getElementById('d-title').textContent=title;
+  document.getElementById('d-body').innerHTML=sugs.map((s,i)=>`
+    <div class="sg"><div class="st"><span class="form">${s.form}</span><b>${esc(s.title)}</b></div>
+    <p>${s.idea}</p>
+    ${s.prompt?`<div class="pl">提示词（即梦/可灵直接用）：</div><pre id="p${i}">${esc(s.prompt)}</pre>
+    <div class="row"><button class="copy" onclick="copyP('p${i}',this)">复制提示词</button>${s.pub?`<span class="tip">⏰ ${s.pub}</span>`:''}</div>`:''}
     </div>`).join('');
   document.getElementById('dbg').style.display='block';
   document.getElementById('drawer').classList.add('open');
 }
-function closeDrawer(){ document.getElementById('dbg').style.display='none'; document.getElementById('drawer').classList.remove('open'); }
-function copyP(id,btn){ navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{btn.textContent='已复制 ✓';setTimeout(()=>btn.textContent='复制提示词',1500);}); }
+function closeDrawer(){document.getElementById('dbg').style.display='none';document.getElementById('drawer').classList.remove('open')}
+function copyP(id,btn){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{btn.textContent='已复制 ✓';setTimeout(()=>btn.textContent='复制提示词',1500)})}
 
-function fanrenTab(m){
-  fanrenMode=m;
-  document.getElementById('tab-new').className = m==='new'?'on':'';
-  document.getElementById('tab-hot').className = m==='hot'?'on':'';
-  if(DATA) renderList('l-fanren', m==='new'?DATA.fanrenNew:DATA.fanrenHot, {time:m==='new'});
-}
-
-/* 周六11点更新倒计时 */
 function tick(){
-  const now=new Date(); const d=new Date(now);
-  d.setDate(now.getDate()+((6-now.getDay())+7)%7); d.setHours(11,0,0,0);
-  if(d<=now) d.setDate(d.getDate()+7);
-  const ms=d-now, day=Math.floor(ms/864e5), h=Math.floor(ms%864e5/36e5), m=Math.floor(ms%36e5/6e4);
-  document.getElementById('countdown').innerHTML = (day===0&&h<12)
-    ? '🔥 <b>今天是更新日！</b> 播出后2小时内发追更内容'
-    : `📺 动画下集更新（周六11:00）还有 <b>${day}天${h}时${m}分</b>`;
+  const now=new Date();const d=new Date(now);
+  d.setDate(now.getDate()+((6-now.getDay())+7)%7);d.setHours(11,0,0,0);
+  if(d<=now)d.setDate(d.getDate()+7);
+  const ms=d-now,day=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+  document.getElementById('countdown').innerHTML=(day===0&&h<12)
+    ?'🔥 <b>今天是更新日！</b> 播出后2小时内发追更内容'
+    :`📺 动画下集更新（周六11:00）还有 <b>${day}天${h}时${m}分</b>`;
 }
-
 async function load(force){
   try{
-    const r = await fetch('/api/hot'+(force?'?t='+Date.now():''));
-    DATA = await r.json();
-    document.getElementById('updated').textContent = '数据更新：'+new Date(DATA.updatedAt).toLocaleTimeString('zh-CN');
-    renderList('l-douyin', DATA.douyin);
-    renderList('l-weibo', DATA.weibo);
-    renderList('l-bili', DATA.bili);
-    fanrenTab(fanrenMode);
-    document.getElementById('s-douyin').textContent = DATA.douyin.ok?'✓ 实时':'✕ 源不可用';
-    document.getElementById('s-weibo').textContent = DATA.weibo.ok?'✓ 实时':'✕ 源不可用';
-    document.getElementById('s-bili').textContent = DATA.bili.ok?'✓ 实时':'✕ 源不可用';
-    document.getElementById('s-fanren').textContent = (DATA.fanrenNew.ok||DATA.fanrenHot.ok)?'✓ 实时':'✕ 源不可用';
-    renderTop3();
-  }catch(e){
-    document.getElementById('updated').textContent = '加载失败，点刷新重试';
-  }
+    const r=await fetch('/api/hot'+(force?'?t='+Date.now():''));
+    DATA=await r.json();
+    document.getElementById('updated').textContent='数据更新：'+new Date(DATA.updatedAt).toLocaleTimeString('zh-CN');
+    render();
+  }catch(e){document.getElementById('updated').textContent='加载失败，点刷新重试'}
 }
-tick(); setInterval(tick,30000);
-load(); setInterval(()=>load(),10*60*1000);
+tick();setInterval(tick,30000);
+load();setInterval(()=>load(),10*60*1000);
 </script>
 </body>
 </html>
